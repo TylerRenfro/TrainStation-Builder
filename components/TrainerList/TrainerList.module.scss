@@ -1,0 +1,123 @@
+.trainersContainer {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+
+    .trainersListContainer {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+
+        .sectionTitle {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+    
+            h3 {
+                font-weight: 900;
+                font-size: 64px;
+                text-transform: uppercase;
+                line-height: 1;
+            }
+    
+            span {
+                height: 5px;
+                width: 100px;
+                background: var(--red);
+            }
+        }
+        
+        .trainerContainer {
+            width: calc(33.33% - 19.98px);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            .imageContainer {
+                width: 100%;
+                height: auto;
+                background-position: center;
+                background-size: cover;
+                aspect-ratio: 1.44/1;
+                border-radius: 10px;
+            }
+
+
+            h2 {
+                font-weight: 700;
+                font-size: 32px;
+                line-height: 1;
+            }
+
+            p {
+                font-family: var(--font-inter);
+                font-size: 20px;
+                
+                &.title {
+                    font-weight: 700;
+                    color: var(--lightRed);
+                }
+            }
+
+            a {
+                font-family: var(--font-inter);
+                background: var(--red);
+                color: white;
+                padding: 8px 16px;
+                font-size: 14px;
+                border-radius: 5px;
+                text-align: center;
+                width: fit-content;
+            }
+        }
+    }
+}
+
+@media (max-width: 992px) {
+
+    .trainersContainer {
+
+        .trainersListContainer {
+
+            .sectionTitle {
+        
+                h3 {
+                    font-size: 40px;
+                }
+        
+                span {
+                    width: 60px;
+                }
+            }
+
+            .trainerContainer {
+                width: calc(50% - 15px);
+
+                p {
+                    font-size: 18px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+
+    .trainersContainer {
+
+        .trainersListContainer {
+
+            .trainerContainer {
+                width: 100%;
+
+                a {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
