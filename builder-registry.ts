@@ -37,6 +37,11 @@ Builder.registerComponent(Hero, {
       allowedFileTypes: ["png", "jpg", "jpeg"],
     },
     {
+      name: "fullHeight",
+      friendlyName: "Full Height",
+      type: "boolean",
+    },
+    {
       name: "subtitle",
       friendlyName: "Subtitle",
       type: "text",
@@ -561,21 +566,7 @@ Builder.registerComponent(TeamMember, {
 
 Builder.registerComponent(TrainerList, {
   name: "TrainerList",
-  inputs: [
-    {
-      name: "columns",
-      type: "number",
-      defaultValue: 3,
-      helperText: "Number of columns in grid layout (1-6)",
-    },
-    {
-      name: "spacing",
-      type: "text",
-      enum: ["sm", "md", "lg"],
-      defaultValue: "md",
-      helperText: "Spacing between trainer cards",
-    },
-  ],
+  friendlyName: "Trainer List"
 });
 
 Builder.registerComponent(GymGallery, {

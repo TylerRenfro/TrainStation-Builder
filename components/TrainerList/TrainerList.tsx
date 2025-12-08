@@ -1,41 +1,55 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import styles from "./TrainerList.module.scss";
 
 interface Trainer {
-    id?: string;
-    name?: string;
-    lastInitial?: string;
-    title?: string;
-    imageUrl?: string | { url: string };
-    bio?: string;
-    certifications?: string[];
-    specialties?: string[];
+    id: string;
+    firstName: string;
+    lastInitial: string;
+    profilePicture: string;
+    title: string;
+    about: {
+        paragraph: string;
+    }[];
+    yearsOfExperience: number;
+    expertise: {
+        expertiseTitle: string;
+    }[];
+    ifOwner: boolean;
 }
 
-function TrainerList({ 
-  columns = 3,
-  spacing = "md"
-}: { 
-  columns?: number;
-  spacing?: "sm" | "md" | "lg";
-}) {
+function TrainerList() {
     const [trainers, setTrainers] = useState<Trainer[]>([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         async function fetchTrainers() {
             try {
                 setLoading(true);
-                setError(null);
                 
                 const getTrainers = await fetch("https://cdn.builder.io/api/v3/content/trainers?apiKey=49da8b8581a648f6989d85ec423cf285");
                 const data = await getTrainers.json();
-                setTrainers(data.results);
-                console.log(data.results);
+                const trainers: Trainer[] = [];
+
+                console.log(data);
+                
+                data.results.map((trainerResults: {id: string, data: Trainer}) => {
+                    trainers.push({
+                        id: trainerResults.id,
+                        firstName: trainerResults.data.firstName,
+                        lastInitial: trainerResults.data.lastInitial,
+                        profilePicture: trainerResults.data.profilePicture,
+                        title: trainerResults.data.title,
+                        about: trainerResults.data.about,
+                        yearsOfExperience: trainerResults.data.yearsOfExperience,
+                        expertise: trainerResults.data.expertise,
+                        ifOwner: trainerResults.data.ifOwner || false,
+                    });
+                });
+
+                setTrainers(trainers);
             } catch (err) {
                 console.error('Error fetching trainers:', err);
-                setError('Failed to load trainers');
             } finally {
                 setLoading(false);
             }
@@ -44,63 +58,48 @@ function TrainerList({
         fetchTrainers();
     }, []);
 
-    // Get the actual URL from either a string or an object with url property
-    const getImageUrl = (imgUrl: string | { url: string } | undefined) => {
-        if (!imgUrl) return '';
-        if (typeof imgUrl === 'string') return imgUrl;
-        if (typeof imgUrl === 'object' && imgUrl.url) return imgUrl.url;
-        return '';
-    };
-
-    const spacingClasses = {
-        sm: "gap-2",
-        md: "gap-4", 
-        lg: "gap-6"
-    };
-
-    const getGridCols = () => {
-        switch (columns) {
-            case 1: return "grid-cols-1";
-            case 2: return "grid-cols-1 sm:grid-cols-2";
-            case 3: return "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3";
-            case 4: return "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4";
-            case 5: return "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5";
-            case 6: return "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6";
-            default: return "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3";
-        }
-    }; 
     return (
-        <div className={`grid ${getGridCols()} ${spacingClasses[spacing]} p-4 max-w-7xl mx-auto`}>
-            {trainers.map((trainer, index) => {
-                // Handle different possible data structures
-                const trainerData = trainer;
-                const finalImageUrl = getImageUrl(trainerData.imageUrl);
-                
-                return (
-                    <div key={trainer.id || index} className="relative rounded-lg overflow-hidden shadow-lg w-full mx-auto border-zinc-800 border flex flex-row sm:flex-col">
-                        {/* Main image */}
-                        {finalImageUrl && (
-                            <div className="relative w-36 h-36 sm:w-full sm:h-64 lg:h-80 flex-shrink-0">
-                                <img 
-                                    src={finalImageUrl} 
-                                    alt={`${trainerData.name}`}
-                                    className="w-full h-full object-cover object-top"
-                                />                                                                
-                            </div>
-                        )}
-                        
-                        {/* Bottom section with name and title */}
-                        <div className="p-4 text-left sm:text-center bg-gradient-to-t flex-1 flex flex-col justify-center">
-                            <h3 className="text-white text-xl sm:text-2xl lg:text-2xl mb-1">
-                                {trainerData.name}
-                            </h3>
-                            <p className="text-red-500 text-xs sm:text-sm lg:text-base uppercase font-semibold tracking-widest">
-                                {trainerData.title}
-                            </p>
+        <div className={styles.trainersContainer}>
+            <div className={styles.trainersListContainer}>
+                <div className={styles.sectionTitle}>
+                    <h3>Owners</h3>
+                    <span />
+                </div>
+                {trainers.map((trainer, index) => (
+                    trainer.ifOwner && (
+                        <div key={`owner-${index}`} className={styles.trainerContainer}>
+                            <div 
+                                className={styles.imageContainer}
+                                style={{ backgroundImage: `url(${trainer.profilePicture})` }}
+                            />
+                            <h2>{trainer.firstName} {trainer.lastInitial}</h2>
+                            <p className={styles.title}>{trainer.title}</p>
+                            <p>Trainer with {trainer.yearsOfExperience} years experience that specializes in Strength and conditioning.</p>
+                            <a href={`/trainer/${trainer.id}`}>Request Consultation</a>
                         </div>
-                    </div>
-                );
-            })}
+                    )
+                ))}
+            </div>
+            <div className={styles.trainersListContainer}>
+                <div className={styles.sectionTitle}>
+                    <h3>Trainers</h3>
+                    <span />
+                </div>
+                {trainers.map((trainer, index) => (
+                    !trainer.ifOwner && (
+                        <div key={`trainer-${index}`} className={styles.trainerContainer}>
+                            <div 
+                                className={styles.imageContainer}
+                                style={{ backgroundImage: `url(${trainer.profilePicture})` }}
+                            />
+                            <h2>{trainer.firstName} {trainer.lastInitial}</h2>
+                            <p className={styles.title}>{trainer.title}</p>
+                            <p>Trainer with {trainer.yearsOfExperience} years experience that specializes in Strength and conditioning.</p>                            
+                            <a href={`/trainer/${trainer.id}`}>Request Consultation</a>
+                        </div>
+                    )
+                ))}
+            </div>
         </div>
     );
 }
