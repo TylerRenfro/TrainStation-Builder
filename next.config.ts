@@ -3,6 +3,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = BuilderDevTools()({
   /* config options here */
+  turbopack: {},
   async headers() {
     return [
       {
