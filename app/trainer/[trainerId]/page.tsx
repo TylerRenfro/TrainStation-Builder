@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import { use, useState, useEffect } from "react";
 import styles from "./Trainer.module.scss";
 
 interface Trainer {
@@ -26,8 +26,8 @@ interface Trainer {
     }[]
 }
 
-function Trainer({ params }: { params: { trainerId: string } }) {
-    const { trainerId } = params;
+function Trainer({ params }: { params: Promise<{ trainerId: string }> }) {
+    const { trainerId } = use(params);
     const [trainer, setTrainer] = useState<Trainer>();
     const [loading, setLoading] = useState(true);
 
