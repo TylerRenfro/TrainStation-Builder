@@ -28,7 +28,7 @@ function Banner({
         <h3 className="text-saira-condensed font-black text-5xl md:text-6xl uppercase text-center">{title}</h3>
         {showRedLine && <div className="w-20 h-2 bg-red-500"></div>}
         {subtitle && <p className="text-inter text-md lg:text-lg">{subtitle}</p>}
-        {buttonText && <Link href={buttonUrl} className="btn btn-primary uppercase">{buttonText}</Link>}
+        {buttonText && <Link href={buttonUrl} className="btn bg-red-500 uppercase">{buttonText}</Link>}
     </div>
   );
 }

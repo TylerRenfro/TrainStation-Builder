@@ -1,119 +1,127 @@
 "use client";
+
 import React from "react";
+import styles from "./MembershipBenefits.module.scss";
+import Link from "next/link";
 
-interface Benefit {
-  title: string;
-  description?: string;
-}
-
-interface Resource {
-  title: string;
-  description?: string;
-}
-
-interface TrialMembership {
-  title: string;
-  price: string;
-  description: string;
-  buttonText: string;
-  buttonUrl: string;
+interface Plans {
+  planTitle: string;
+  planSubtitle: string;
+  planPrice: string;
+  planPriceSubtext: string;
+  planBenefits: {
+    benefitText: string;
+  }[]
 }
 
 interface MembershipBenefitsProps {
-  sectionTitle?: string;
-  sectionDescription?: string;
-  benefitsTitle?: string;
-  benefitsColumn1: Benefit[];
-  benefitsColumn2: Benefit[];
-  resourcesTitle?: string;
-  resources: Resource[];
-  trialMembership: TrialMembership;
+  plans: Plans[];
+  overviewTitle: string;
+  overviewSubtitle: string;
+  additionalBenefits: {
+    benefitText: string;
+  }[];
+  additionalResources: {
+    resourceText: string;
+  }[],
+  rightColumnTitle: string;
+  rightColumnText: string;
 }
 
 function MembershipBenefits({
-  sectionTitle = "Membership Benefits",
-  sectionDescription,
-  benefitsTitle = "Membership Benefits",
-  benefitsColumn1,
-  benefitsColumn2,
-  resourcesTitle = "Additional Resources",
-  resources,
-  trialMembership
+  plans,
+  overviewTitle,
+  overviewSubtitle,
+  additionalBenefits,
+  additionalResources,
+  rightColumnTitle,
+  rightColumnText
 }: MembershipBenefitsProps) {
 
   return (
-    <div className="w-full py-16 sm:py-24">
-      <div className="container mx-auto px-4">
-        {/* Main Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
-          {/* Left Column: Membership Benefits and Additional Resources (60%) */}
-          <div className="space-y-8 md:col-span-3">
-            {/* Membership Benefits */}
-            <div className="space-y-4">
-              <h3 className="text-xl font-semibold">{benefitsTitle}</h3>
-              <div className="card bg-noneshadow-xl border border-base-300">
-                <div className="card-body">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-3">
-                      {benefitsColumn1.map((benefit, index) => (
-                        <div key={index} className="flex items-start gap-2">
-                          <span className="text-primary mt-0.5">•</span>
-                          <span className="opacity-70">{benefit.title}</span>
-                        </div>
-                      ))}
+    <div className={styles.membershipBenefitsContainer}>
+      <div className={styles.innerContainer}>
+        <div className={styles.plansContainer}>
+          {plans && plans.map((plan, index) => (
+            <div
+              key={`plan-card-` + index} 
+              className={styles.planCard}
+            >
+              <div className={styles.planHeader}>
+                {plan.planTitle && <h3 className={styles.planTitle}>{plan.planTitle}</h3>}
+                {plan.planSubtitle && <p>{plan.planSubtitle}</p>}
+              </div>
+              <div className={styles.priceContainer}>
+                {plan.planPrice && <p className={styles.price}>{plan.planPrice}</p>}
+                {plan.planPriceSubtext && <p>{plan.planPriceSubtext}</p>}
+              </div>
+              {plan.planBenefits && (
+                <div className={styles.planBenefitsContainer}>
+                  {plan.planBenefits.map((benefit, subindex) => (
+                    <div key={`plan-${index}-benefit-${subindex}`}>
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+                          <path fill="#10B981" d="M530.8 134.1C545.1 144.5 548.3 164.5 537.9 178.8L281.9 530.8C276.4 538.4 267.9 543.1 258.5 543.9C249.1 544.7 240 541.2 233.4 534.6L105.4 406.6C92.9 394.1 92.9 373.8 105.4 361.3C117.9 348.8 138.2 348.8 150.7 361.3L252.2 462.8L486.2 141.1C496.6 126.8 516.6 123.6 530.9 134z"/>
+                      </svg>
+                      <p>{benefit.benefitText}</p>
                     </div>
-                    <div className="space-y-3">
-                      {benefitsColumn2.map((benefit, index) => (
-                        <div key={index} className="flex items-start gap-2">
-                          <span className="text-primary mt-0.5">•</span>
-                          <span className="opacity-70">{benefit.title}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+                  ))}
                 </div>
+              )}
+              <div className={styles.buttonContainer}>
+                <Link href="#" className={styles.signupButton}>Sign Up Now</Link>
               </div>
             </div>
-
-            {/* Additional Resources */}
-            {resources && resources.length > 0 && (
-              <div className="space-y-4">
-                <h3 className="text-xl font-semibold">{resourcesTitle}</h3>
-                <div className="card shadow-xl border border-base-300">
-                  <div className="card-body">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-3">
-                        {resources.map((resource, index) => (
-                          <div key={index} className="flex items-start gap-2">
-                            <span className="text-primary mt-0.5">•</span>
-                            <span className="opacity-70">{resource.title}</span>
-                          </div>
-                        ))}
-                      </div>
+          ))}
+        </div>
+        {overviewTitle && (
+          <div className={styles.overviewContainer}>
+            <h4 className={styles.title}>{overviewTitle}</h4>
+            {overviewSubtitle && <p>{overviewSubtitle}</p>}
+          </div>
+        )}
+        <div className={styles.additionalInformation}>
+          <div className={styles.leftColumn}>
+            {additionalBenefits && (
+              <div className={styles.additionalMembershipContainer}>
+                <h4 className={styles.title}>Membership Benefits</h4>
+                <div className={styles.benefitsListContainer}>
+                  {additionalBenefits.map((benefit, index) => (
+                    <div 
+                      key={`additional-benefit-` + index}
+                      className={styles.benefitItem}
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+                          <path fill="#10B981" d="M530.8 134.1C545.1 144.5 548.3 164.5 537.9 178.8L281.9 530.8C276.4 538.4 267.9 543.1 258.5 543.9C249.1 544.7 240 541.2 233.4 534.6L105.4 406.6C92.9 394.1 92.9 373.8 105.4 361.3C117.9 348.8 138.2 348.8 150.7 361.3L252.2 462.8L486.2 141.1C496.6 126.8 516.6 123.6 530.9 134z"/>
+                      </svg>
+                      <p>{benefit.benefitText}</p>
                     </div>
-                  </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            {additionalResources && (
+              <div className={styles.additionalMembershipContainer}>
+                <h4 className={styles.title}>Additional Resources</h4>
+                <div className={styles.benefitsListContainer}>
+                  {additionalResources.map((resource, index) => (
+                    <div key={`additional-resource-${index}`} className={styles.benefitItem}>
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+                          <path fill="#10B981" d="M530.8 134.1C545.1 144.5 548.3 164.5 537.9 178.8L281.9 530.8C276.4 538.4 267.9 543.1 258.5 543.9C249.1 544.7 240 541.2 233.4 534.6L105.4 406.6C92.9 394.1 92.9 373.8 105.4 361.3C117.9 348.8 138.2 348.8 150.7 361.3L252.2 462.8L486.2 141.1C496.6 126.8 516.6 123.6 530.9 134z"/>
+                      </svg>
+                      <p>{resource.resourceText}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
             )}
           </div>
-
-          {/* Right Column: Trial Membership (40%) */}
-          <div className="space-y-6 md:col-span-2">
-            <h3 className="text-xl font-semibold">{trialMembership.title}</h3>
-            <p className="opacity-70">
-              <span className="font-semibold">{trialMembership.price}</span> {trialMembership.description}
-            </p>
-            <div className="card-actions mt-4">
-              <a 
-                href={trialMembership.buttonUrl} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="btn btn-outline btn-primary"
-              >
-                {trialMembership.buttonText}
-              </a>
+          {rightColumnTitle && (
+            <div className={styles.rightColumn}>
+              {rightColumnTitle && <h4 className={styles.title}>{rightColumnTitle}</h4>}
+              {rightColumnText && <p>{rightColumnText}</p>}
+              <Link href="#" className={styles.signupButton}>Sign Up Now</Link>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

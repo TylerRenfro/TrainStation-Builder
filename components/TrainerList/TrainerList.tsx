@@ -95,7 +95,7 @@ function TrainerList() {
                             <h2>{trainer.firstName} {trainer.lastInitial}</h2>
                             <p className={styles.title}>{trainer.title}</p>
                             <p>Trainer with {trainer.yearsOfExperience} years experience that specializes in Strength and conditioning.</p>                            
-                            <a href={`/trainer/${trainer.id}`}>Request Consultation</a>
+                            <a href={`/contact`}>Request Consultation</a>
                         </div>
                     )
                 ))}

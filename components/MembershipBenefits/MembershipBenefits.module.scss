@@ -1,0 +1,210 @@
+.membershipBenefitsContainer {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h3, h4, p, a {
+        font-family: var(--font-inter);
+    }
+
+    p {
+        color: #A3A3A3;
+    }
+
+    .title {
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    svg {
+        color: #10B981;
+        aspect-ratio: 1/1;
+        width: 20px;
+        border: 1px solid #10B981;
+        padding: 2px;
+        border-radius: 10px;
+    }
+
+    .signupButton {
+        background: var(--red);
+        border-radius: 8px;
+        color: white;
+        padding: 8px 16px;
+        display: flex;
+        width: fit-content;
+        font-size: 14px;
+    }
+
+    .innerContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        align-items: center;
+        width: 100%;
+        max-width: 1000px;
+    }
+
+    .plansContainer {
+        display: flex;
+        gap: 20px;
+        width: 100%;
+
+        .planCard {
+            width: calc(33.33% - 13.34px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            background: #171717;
+            border-radius: 10px;
+            padding: 20px;
+
+            .planHeader {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 5px;
+
+                h3 {
+                    color: var(--red);
+                    font-size: 20px;
+                    font-weight: 600;
+                }
+
+                p {
+                    font-size: 16px;
+                    font-weight: 400;
+                }
+            }
+
+            .priceContainer {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+
+                .price {
+                    font-size: 30px;
+                    color: white;
+                }
+            }
+
+            .planBenefitsContainer {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                width: 100%;
+
+                div {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+
+                    p {
+                        font-size: 14px;
+                    }
+                }
+            }
+
+            .buttonContainer {
+                width: 100%;
+            }
+        }
+    }
+    
+    .overviewContainer {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .additionalInformation {
+        width: 100%;
+        display: flex;
+        gap: 20px;
+
+        .leftColumn {
+            width: calc(70% - 10px);
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+
+            .additionalMembershipContainer {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+    
+                .benefitsListContainer {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 10px;
+                    border: 1px solid #A3A3A3;
+                    border-radius: 8px;
+                    padding: 20px;
+        
+                    .benefitItem {
+                        display: flex;
+                        gap: 10px;
+                        align-items: center;
+                        width: calc(50% - 10px);
+        
+                        p {
+                            font-size: 14px;
+                            width: calc(100% - 30px);
+                        }
+                    }
+                }
+            }
+        }
+
+        .rightColumn {
+            width: calc(30% - 10px);
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+
+    .membershipBenefitsContainer {
+
+        .signupButton {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .plansContainer {
+            flex-direction: column;
+    
+            .planCard {
+                width: 100%;
+            }
+        }
+    
+        .additionalInformation {
+            flex-direction: column;
+            gap: 40px;
+    
+            .leftColumn, .rightColumn {
+                width: 100%;
+
+                .additionalMembershipContainer {
+
+                    .benefitsListContainer {
+                        flex-direction: column;
+    
+                        .benefitItem {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
