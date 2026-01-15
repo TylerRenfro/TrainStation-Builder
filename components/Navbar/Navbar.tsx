@@ -17,7 +17,14 @@ function Navbar() {
         async function fetchNavigation() {
             const getNav = await fetch("https://cdn.builder.io/api/v3/content/navigation?apiKey=49da8b8581a648f6989d85ec423cf285");
             const results = await getNav.json();
-            setNavData(results.results);
+
+            const navArray: NavLink[] = [];
+
+            results.results.forEach((item: {data: NavLink}) => {
+                navArray.push(item.data);
+            });
+
+            setNavData(navArray);
         }
 
         fetchNavigation();

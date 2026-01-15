@@ -25,11 +25,11 @@ function Hero({ backgroundImage, fullHeight, subtitle, title, buttonText, button
                 <div className="hero-content text-center">
                     <div className="max-w-[350px] md:max-w-[550px]">
                         {subtitle && (
-                            <p className="text-saira text-sm sm:text-lg md:text-3xl lg:text-3xl text-center uppercase tracking-[5px] text-primary">{subtitle}</p>                        
+                            <p className="text-saira text-sm sm:text-lg md:text-3xl lg:text-3xl text-center uppercase tracking-[5px] text-red-500">{subtitle}</p>                        
                         )}
                         <h1 className="text-saira-condensed font-extrabold text-6xl sm:text-6xl md:text-8xl lg:text-8xl text-center uppercase tracking-tight leading-none pb-4">{title}</h1>
                         {buttonText && (
-                            <Link href={buttonUrl} className="btn btn-primary uppercase">{buttonText}</Link>
+                            <Link href={buttonUrl} className="btn bg-red-500 uppercase">{buttonText}</Link>
                         )}
                     </div>
                 </div>

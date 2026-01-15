@@ -14,6 +14,8 @@ import GymGallery from "./components/GymGallery/GymGallery";
 import ClosingCTA from "./components/ClosingCTA/ClosingCTA";
 import MemberServices from "./components/MemberServices/MemberServices";
 import Banner from "./components/Banner/Banner";
+import Gallery from "./components/Gallery/Gallery";
+import ContactForm from "./components/ContactForm/ContactForm";
 
 builder.init(process.env.NEXT_PUBLIC_BUILDER_API_KEY!);
 
@@ -160,116 +162,86 @@ Builder.registerComponent(MembershipBenefits, {
   name: "MembershipBenefits",
   inputs: [
     {
-      name: "sectionTitle",
-      type: "text",
-      defaultValue: "Membership Benefits",
-    },
-    {
-      name: "sectionDescription",
-      type: "text",
-      defaultValue: "",
-    },
-    {
-      name: "benefitsTitle",
-      type: "text",
-      defaultValue: "Membership Benefits",
-    },
-    {
-      name: "benefitsColumn1",
+      name: "plans",
+      friendlyName: "Plans",
       type: "list",
       subFields: [
         {
-          name: "title",
+          name: "planTitle",
+          friendlyName: "Plan Title",
           type: "text",
-          required: true,
-        }
-      ],
-      defaultValue: [
-        { title: "10+ Squat racks" },
-        { title: "3 Complete sets of dumbbells up to 200 lbs." },
-        { title: "25 Adjustable benches" },
-        { title: "Selectorized Machines" },
-        { title: "State of the art plate loaded equipment" },
-        { title: "Variety of cardio equipment" }
-      ],
-    },
-    {
-      name: "benefitsColumn2",
-      type: "list",
-      subFields: [
+        },
         {
-          name: "title",
+          name: "planSubtitle",
+          friendlyName: "Plan Subtitle",
           type: "text",
-          required: true,
+        },
+        {
+          name: "planPrice",
+          friendlyName: "Plan Price",
+          type: "text",
+        },
+        {
+          name: "planPriceSubtext",
+          friendlyName: "Plan Price Subtext",
+          type: "text"
+        },
+        {
+          name: "planBenefits",
+          friendlyName: "Plan Benefits",
+          type: "list",
+          subFields: [
+            {
+              name: "benefitText",
+              friendlyName: "Benefit Text",
+              type: "text"
+            }
+          ]
         }
-      ],
-      defaultValue: [
-        { title: "Basketball Court" },
-        { title: "Spin room" },
-        { title: "Boxing area with Muay Thai, Aqua, Power Strike, and Speed bags" },
-        { title: "Functional training area with turf" }
-      ],
+      ]
     },
     {
-      name: "resourcesTitle",
+      name: "overviewTitle",
+      friendlyName: "Overview Title",
       type: "text",
-      defaultValue: "Additional Resources",
     },
     {
-      name: "resources",
+      name: "overviewSubtitle",
+      friendlyName: "Overview Subtitle",
+      type: "text",
+    },
+    {
+      name: "additionalBenefits",
+      friendlyName: "Additional Benefits",
       type: "list",
       subFields: [
         {
-          name: "title",
-          type: "text",
-          required: true,
+          name: "benefitText",
+          type: "text"
         }
-      ],
-      defaultValue: [
-        { title: "Personal training consultations" },
-        { title: "Nutrition guidance and meal planning" },
-        { title: "Group fitness class schedules" },
-        { title: "Recovery and wellness services" }
-      ],
+      ]
     },
     {
-      name: "trialMembership",
-      type: "object",
+      name: "additionalResources",
+      friendlyName: "Additional Resources",
+      type: "list",
       subFields: [
         {
-          name: "title",
-          type: "text",
-          defaultValue: "Not Sure? Try a One-Week Trial!",
-        },
-        {
-          name: "price",
-          type: "text",
-          defaultValue: "$15",
-        },
-        {
-          name: "description",
-          type: "text",
-          defaultValue: "Experience everything we have to offer with a full week trial membership.",
-        },
-        {
-          name: "buttonText",
-          type: "text",
-          defaultValue: "Sign Up Now",
-        },
-        {
-          name: "buttonUrl",
-          type: "url",
-          defaultValue: "https://trainstationfitnesscenter.gymmasteronline.com/portal/signup",
+          name: "resourceText",
+          type: "text"
         }
-      ],
-      defaultValue: {
-        title: "Not Sure? Try a One-Week Trial!",
-        price: "$15",
-        description: "Experience everything we have to offer with a full week trial membership.",
-        buttonText: "Sign Up Now",
-        buttonUrl: "https://trainstationfitnesscenter.gymmasteronline.com/portal/signup"
-      },
+      ]
     },
+    {
+      name: "rightColumnTitle",
+      friendlyName: "Right Column Title",
+      type: "text"
+    },
+    {
+      name: "rightColumnText",
+      friendlyName: "Right Column Text",
+      type: "text"
+    }
   ],
 });
 
@@ -585,7 +557,7 @@ Builder.registerComponent(GymGallery, {
         {
           name: "altText",
           type: "text"
-        }
+        },
       ],
     },
   ],
@@ -765,5 +737,42 @@ Builder.registerComponent(Banner, {
       type: "url",
       helperText: "URL the button links to",
     }
+  ],
+});
+
+Builder.registerComponent(Gallery, {
+  name: "Gallery",
+  inputs: [
+    {
+      name: "galleryImages",
+      friendlyName: "Gallery Images",
+      type: "list",
+      subFields: [
+        {
+          name: "image",
+          type: "file",
+          allowedFileTypes: ["png", "jpg", "jpeg"],
+        },
+        {
+          name: "altText",
+          type: "text"
+        },
+        {
+          name: "category",
+          type: "enum",
+          enum: ["Free Weights", "Cardio Zone", "Sectorized Machines", "Recovery Lounge", "Boxing Area", "Spin Room", "Posing Room", "Functional Turf", "Basketball Court"]
+        }
+      ],
+    },
+  ],
+});
+
+Builder.registerComponent(ContactForm, {
+  name: "ContactForm",
+  inputs: [
+    {
+      name: "formImage",
+      type: "file",
+    },
   ],
 });
